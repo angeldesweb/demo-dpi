@@ -5,7 +5,7 @@
 
 <Navbar>
     <form slot="end" method="post" use:enhance >
-        <button class="btn" formaction="?/logout">Cerrar</button>
+        <a href="/logout" class="btn">Cerrar</a>
     </form>
 </Navbar>
 

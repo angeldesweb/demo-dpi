@@ -17,6 +17,7 @@
                     if (result.type === 'success') {
                         goto('/v1');
                     }
+                    console.log(result.type)
                 }
             }} >
                 <div class="form-control my-3">

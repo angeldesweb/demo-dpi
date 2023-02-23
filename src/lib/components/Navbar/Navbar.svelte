@@ -6,6 +6,7 @@
             </label>
             <ul tabindex="-1" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                 <li><a href="/v1/admin">Administrar</a></li>
+                <li><a href="/v1/new">Agregar jornada</a></li>
                 <!-- <li tabindex="-1">
                 <a href={null} class="justify-between">
                     Parent
