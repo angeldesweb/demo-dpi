@@ -19,7 +19,7 @@
                         goto('/v1');
                     }
                     if(result.type === 'error') {
-                        console.log(result.data)
+                        console.log(result)
                         //toast.error(result.data.code);
                     }
                 }
