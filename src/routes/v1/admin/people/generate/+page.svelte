@@ -5,11 +5,20 @@
     import { goto } from '$app/navigation';
     import { onDestroy , onMount } from 'svelte';
 
-    const selection = browser && localStorage.getItem('gen');
-    let people = [];
-    let targets = []
+    let mounting = true;
 
-    if(!selection) browser && goto('/v1/admin/people');
+    const selection = browser && localStorage.getItem('gen');
+
+    let people = [];
+    let targets = [];
+    let groups = {};
+
+    const setGroup = (i) => {
+        i+= 1
+        let count = i / 6;
+        let group = Math.ceil(count);
+        return group;
+    }
 
     const printAll = () => targets = targets.map(() => true)
 
@@ -21,74 +30,69 @@
     onMount(() => {
         const peopleStr = JSON.parse(selection);
         people = peopleStr.map(str => JSON.parse(str));
+        people = people.map((obj,i) => ({...obj,group:`grupo-${setGroup(i)}`}));
+        groups = people.reduce((acc,obj) => {
+            acc = acc[obj.group]  ? {...acc,[obj.group]:[...acc[obj.group],{...obj}]} : {...acc,[obj.group]:[{...obj}]}
+            return acc
+        },{});
+        mounting = false;
         targets = people.map(() => false);
     })
     onDestroy(() => browser && localStorage.removeItem('gen'));
 </script>
 
+{#if selection}
 <div class="m-8 flex justify-around">
     <button class="btn btn-success text-white" on:click={printAll}>Imprimir todo</button>
     <button class="btn btn-success text-white" on:click={returnPage}>Regresar</button>
 </div>
+{/if}
 
-{#if people?.length}
-{#each people as person , i }
+{#if Object.entries(groups).length}
+{#each Object.entries(groups) as docs , i}
 <div class="mt-3">
     <button class="btn btn-ghost text-success" on:click={() => targets[i] = true}>Imprimir</button>
 </div>
 <PrintPdf bind:print={targets[i]}>
     <Page>
         <div class="view">
-            <div class="container">
-                <h2 class="text-3xl text-black font-bold text-center">Código de usuario</h2>
-                <div class="text">
-                    <div class="box">
-                        <span class="font-bold text-black text-xs">Usuario:</span> <span class="text-black text-xs"> {person.name}</span>
-                    </div>
-                    <div class="box">
-                        <span class="font-bold text-black text-xs">CUI:</span> <span class="text-black text-xs"> {person.cui}</span>
+            <div class="title w-full">
+                <p class="p-4 font-bold">Grupo - {i}</p>
+            </div>
+            <div class="box">
+                {#each docs[1] as doc , i }
+                <div class="card p-6 shadow-xl">
+                    <div class="barcode">
+                        <p>{doc.name}</p>
+                        <Barcode 
+                            options={{
+                                width: 1,
+                                height: 30
+                            }}
+                            value="{doc.id}"
+                        />
                     </div>
                 </div>
-                <div class="divider bg-black"  style="height:1px;"></div>
-                <div class="barcode">
-                    <Barcode 
-                        options={{
-                            width: 1,
-                            height: 30
-                        }}
-                        value="{person.id}"
-                    />
-                </div>
+                {/each}
             </div>
         </div>
-        
-    </Page> 
+    </Page>
 </PrintPdf>
 {/each}
 {/if}
 <style>
     .view {
-        width: 90%;
-        margin: auto;
         background-color: #fff;
-        padding:2em;
-        display:grid;
-        place-content: center;
+        color: #000;  
     }
-
-    .text {
+    .title {
         display:flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 2em 0;
+        justify-content: flex-end;
     }
-
-    .container {
-        width: 40rem;
-    }
-
-    .barcode {
+    .box {
         display: grid;
-        place-content: center;
+        padding: 1em;
+        gap:1em;
+        grid-template-columns: repeat(auto-fill,20rem);
     }
 </style>
