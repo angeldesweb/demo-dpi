@@ -10,9 +10,9 @@ export const load = async () => {
 export const actions = {
     addjourney: async ({ request }) => {
         const data = await request.formData();
-        const values = Object.fromEntries(data);
-        
-        const { success } = await createJourney(values);
+        let values = Object.fromEntries(data);
+
+        const { success } = await createJourney({...values,open:true});
         return { success }
     }
 }
