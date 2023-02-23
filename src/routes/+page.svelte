@@ -3,6 +3,7 @@
     import { enhance } from '$app/forms';
     import { goto } from '$app/navigation';
     import { Diamonds } from 'svelte-loading-spinners';
+    import toast from 'svelte-french-toast';
 
     let isSubmitting = false;
 </script>
@@ -17,7 +18,10 @@
                     if (result.type === 'success') {
                         goto('/v1');
                     }
-                    console.log(result.type)
+                    if(result.type === 'error') {
+                        console.log(result.data)
+                        //toast.error(result.data.code);
+                    }
                 }
             }} >
                 <div class="form-control my-3">
