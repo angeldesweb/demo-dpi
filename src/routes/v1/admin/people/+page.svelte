@@ -2,6 +2,7 @@
     import { Container , PageHeading } from '$lib/components';
 	import { FormSelectCommunity } from '$lib/forms';
 	import { TablePeopleGen } from '$lib/tables';
+    import dayjs from 'dayjs';
 
     export let data;
     export let form;
@@ -11,6 +12,11 @@
 
     const handleSelectCommunity = e => {
         community = e.target.value;
+    }
+
+    $: if(form?.docs) {
+        form.docs = form.docs.map(doc => ({...doc,birth: dayjs(Date(doc.birth)).format('DD/MM/YYYY')}))
+    
     }
 </script>
 
@@ -26,7 +32,7 @@
         {#if form?.docs}
             {#if toGen.length}
             <div class="gen-button">
-                <a href="/v1/admin/people/generate" class="btn text-xs btn-ghost text-accent btn-xs">generar todo</a>
+                <a href="/v1/admin/people/generate" class="btn text-xs btn-accent">generar para la selección</a>
             </div>
             {/if}
             {#if form.docs.length}
@@ -46,5 +52,11 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+    }
+
+    .gen-button {
+        display:flex;
+        width:100%;
+        justify-content: flex-end;
     }
 </style>

@@ -1,6 +1,5 @@
 <script>
     import { browser } from '$app/environment';
-    import { enhance } from '$app/forms';
 
     export let toGen;
     export let people;
@@ -37,8 +36,6 @@
             browser && localStorage.setItem('gen',JSON.stringify(toGen))
         }
     }
-
-    $: console.log(toGen)
 </script>
 
 <div class="overflow-x-auto w-full mt-8">
