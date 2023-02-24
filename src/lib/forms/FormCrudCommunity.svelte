@@ -1,4 +1,5 @@
 <script>
+    import toast from 'svelte-french-toast';
     import { fly } from 'svelte/transition';
     import { enhance } from '$app/forms';
 
@@ -15,7 +16,6 @@
 
     const handleUpdateChange = e => {
         value = e.target.value;
-        console.log(value)
     }
 
     const handleUpdate = ({ form , action }) => {
@@ -23,6 +23,7 @@
         if(!!value) name = value;
         return async ({result}) => {
             if(result.type === 'success') {
+                toast.success('Actualizado con éxito');
                 edit = false;
                 refresh()
             }
@@ -33,6 +34,7 @@
         modal.click()
         return async ({ result }) => {
             if(result.type === 'success') {
+                toast.success('Resgistro eliminado')
                 refresh()
             }
         }

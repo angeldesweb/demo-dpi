@@ -1,4 +1,5 @@
 <script>
+    import toast from 'svelte-french-toast';
     import { enhance } from '$app/forms';
     import { SquareRoundedPlus } from '$lib/components';
 
@@ -8,6 +9,7 @@
     const handleAdd = ({ form }) => {
         return async ({ result }) => {
             if(result.type === 'success') {
+                toast.success('Registrado con éxito');
                 name = '';
                 cb()
             }
