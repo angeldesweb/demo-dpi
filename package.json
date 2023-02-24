@@ -36,6 +36,7 @@
 		"dayjs": "^1.11.7",
 		"firebase": "^9.17.1",
 		"firebase-admin": "^11.5.0",
+		"print-js": "^1.6.0",
 		"svelte-barcode": "^2.0.0",
 		"svelte-french-toast": "^1.0.3",
 		"svelte-loading-spinners": "^0.3.4",
