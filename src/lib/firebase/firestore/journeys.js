@@ -8,7 +8,6 @@ export const createJourney = async (args) => {
 
 export const listJourneys = async () => {
     const response = await listDocuments('journeys');
-    console.log(response)
     return response;
 }
 
