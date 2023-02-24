@@ -1,6 +1,7 @@
 <script>
     import { enhance } from '$app/forms';
     import { Container , PageHeading } from '$lib/components';
+    import { getJourney } from '$lib/firebase/firestore/journeys';
     import toast from 'svelte-french-toast';
     
     export let data;
@@ -12,6 +13,8 @@
     const handleAssign = async () => {
         return async ({result}) => {
             if(result.type === 'success') {
+                let refresh = await getJourney(data.doc.id);
+                people = refresh.doc.people;
                 toast.success('Actualizado con éxito')
                 id = '';
                 input.focus();

@@ -18,6 +18,9 @@ export let actions = {
         let clean = new Set([...people,person]);
         people = [...clean]
         const result = await updateJourney(id,{people});
-        console.log(result);
+        return {
+            success: true,
+            ...result
+        }
     }
 }

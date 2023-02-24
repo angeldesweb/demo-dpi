@@ -4,6 +4,7 @@
 	import { PageHeading } from '$lib/components';
 
     export let data;
+
     let opens = [];
     let closeds = [];
 
@@ -41,7 +42,7 @@
         <div class="card shadow-xl item mt-4">
             <span class="font-bold">{doc.name}</span>
             <div class="buttons">
-                <a href="/v1/{doc.id}" class="btn btn-ghost text-info text-xs">Ver resumen</a>
+                <a href="/v1/reports/{doc.id}" class="btn btn-ghost text-info text-xs">Ver resumen</a>
                 <form method="post" use:enhance>
                     <button formaction="?/reopenjourney&id={doc.id}" class="btn btn-ghost text-error text-xs">Reabrir</button>
                 </form>
